@@ -2,7 +2,6 @@ FROM debian:bullseye
 
 EXPOSE 3306
 
-# Need to delete these var:
 ARG DB_HOST
 ARG DB_PORT
 ARG DB_DB
@@ -22,7 +21,6 @@ RUN sed -i "s/DB_DB/$DB_DB/g" /db_create.sql \
  && sed -i "s/DB_ROOT_PW/$DB_ROOT_PW/g" /db_create.sql
 
 RUN service mariadb start && mariadb < db_create.sql
-#RUN rm -f db_create.sql
 
 CMD ["mysqld"]
 

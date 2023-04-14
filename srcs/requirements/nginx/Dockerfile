@@ -2,8 +2,7 @@ FROM alpine:3.17
 
 EXPOSE 443
 
-RUN apk update && apk upgrade
-RUN apk add --no-cache nginx openssl
+RUN apk update && apk upgrade && apk add --no-cache nginx openssl
 
 # SSL Certificate
 RUN mkdir -p /etc/ssl

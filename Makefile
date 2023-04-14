@@ -4,8 +4,8 @@ YML	:= srcs/docker-compose.yml
 all: $(NAME)
 
 $(NAME):
-	sudo mkdir -p /home/florian/data/wordpress
-	sudo mkdir -p /home/florian/data/mariadb
+	sudo mkdir -p ~/data/wordpress
+	sudo mkdir -p ~/data/mariadb
 	docker compose -f $(YML) up --build -d
 
 stop:
@@ -24,10 +24,8 @@ prune:
 	docker system prune --all --volumes
 
 volume:
-	sudo rm -rf /home/florian/data/wordpress
-	sudo rm -rf /home/florian/data/mariadb
-	mkdir -p /home/florian/data/wordpress
-	mkdir -p /home/florian/data/mariadb
+	sudo rm -rf ~/data/wordpress
+	sudo rm -rf ~/data/mariadb
 	
 domain:	bash -c 'echo "127.0.0.1 fsemke.42.fr" >> /etc/hosts'
 
