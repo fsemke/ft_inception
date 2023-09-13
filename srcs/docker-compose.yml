@@ -17,7 +17,7 @@ volumes:
       o: bind
 
 services:
-  own_mariadb:
+  mariadb:
     container_name: mariadb
     image: mariadb
     env_file: .env
@@ -34,7 +34,7 @@ services:
     networks:
       - own_network
 
-  own_wordpress:
+  wordpress:
     container_name: wordpress
     image: wordpress
     env_file: .env
@@ -45,12 +45,17 @@ services:
     networks:
       - own_network
     depends_on:
-      - own_mariadb
+      - mariadb
 
-  own_nginx:
+  nginx:
     container_name: nginx
     image: nginx
-    build: ./requirements/nginx
+    env_file: .env
+    build:
+      context: ./requirements/nginx
+      args:
+        - DOMAIN_NAME=${DOMAIN_NAME}
+        - CERTS=${CERTS}
     restart: on-failure
     volumes:
       - wordpress:/var/www/wordpress:rw
@@ -59,5 +64,5 @@ services:
     ports:
       - "443:443"
     depends_on:
-      - own_wordpress
+      - wordpress
 

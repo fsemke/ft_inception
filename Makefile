@@ -27,7 +27,8 @@ volume:
 	sudo rm -rf ~/data/wordpress
 	sudo rm -rf ~/data/mariadb
 	
-domain:	bash -c 'echo "127.0.0.1 fsemke.42.fr" >> /etc/hosts'
+domain:	
+	echo "127.0.0.1 fsemke.42.fr" >> /etc/hosts
 
 logs: 
 	docker compose -f $(YML) logs
