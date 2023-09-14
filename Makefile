@@ -33,4 +33,4 @@ domain:
 logs: 
 	docker compose -f $(YML) logs
 
-re:	prune volume
+re:	fclean all
