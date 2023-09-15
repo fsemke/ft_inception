@@ -21,13 +21,7 @@ services:
     container_name: mariadb
     image: mariadb
     env_file: .env
-    build:
-      context: ./requirements/mariadb
-      args:
-        - DB_DB=${DB_DB}
-        - DB_USER=${DB_USER}
-        - DB_PW=${DB_PW}
-        - DB_ROOT_PW=${DB_ROOT_PW}
+    build: ./requirements/mariadb
     restart: on-failure
     volumes:
       - mariadb:/var/lib/mysql:rw

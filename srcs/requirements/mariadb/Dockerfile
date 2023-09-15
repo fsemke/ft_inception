@@ -2,13 +2,6 @@ FROM alpine:3.17
 
 EXPOSE 3306
 
-#ARG DB_HOST
-#ARG DB_PORT
-#ARG DB_DB
-#ARG DB_USER
-#ARG DB_PW
-#ARG DB_ROOT_PW
-
 RUN apk update && apk add --no-cache mariadb mariadb-client
 
 RUN sed -i "s/skip-networking/skip-networking=0/g" /etc/my.cnf.d/mariadb-server.cnf
@@ -25,4 +18,3 @@ RUN chmod 777 /var/mariadb/setup.sh
 ENTRYPOINT ["/var/mariadb/setup.sh"]
 
 CMD ["/usr/bin/mysqld", "--user=mysql", "--init-file=/var/mariadb/db_create.sql"]
-
