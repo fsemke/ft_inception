@@ -1,4 +1,4 @@
-FROM alpine:3.17
+FROM alpine:3.17.5
 
 EXPOSE 3306
 
@@ -11,7 +11,7 @@ RUN chmod 777 /var/run/mysqld
 RUN chown -R mysql:mysql /var/lib/mysql
 
 COPY ./conf/db_create.sql /var/mariadb/
-COPY ./conf/setup.sh /var/mariadb/
+COPY ./tools/setup.sh /var/mariadb/
 RUN chmod 777 /var/mariadb/db_create.sql
 RUN chmod 777 /var/mariadb/setup.sh
 
