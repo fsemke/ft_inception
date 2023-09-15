@@ -1,26 +1,28 @@
-FROM debian:bullseye
+FROM alpine:3.17
 
 EXPOSE 3306
 
-ARG DB_HOST
-ARG DB_PORT
-ARG DB_DB
-ARG DB_USER
-ARG DB_PW
-ARG DB_ROOT_PW
+#ARG DB_HOST
+#ARG DB_PORT
+#ARG DB_DB
+#ARG DB_USER
+#ARG DB_PW
+#ARG DB_ROOT_PW
 
-RUN apt-get update && apt-get upgrade -y \
-&&  apt-get install -y mariadb-server
+RUN apk update && apk add --no-cache mariadb mariadb-client
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
-COPY ./conf/db_create.sql /
+RUN sed -i "s/skip-networking/skip-networking=0/g" /etc/my.cnf.d/mariadb-server.cnf
 
-RUN sed -i "s/DB_DB/$DB_DB/g" /db_create.sql \
- && sed -i "s/DB_USER/$DB_USER/g" /db_create.sql \
- && sed -i "s/DB_PW/$DB_PW/g" /db_create.sql \
- && sed -i "s/DB_ROOT_PW/$DB_ROOT_PW/g" /db_create.sql
+RUN mkdir -p /var/run/mysqld
+RUN chmod 777 /var/run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql
 
-RUN service mariadb start && mariadb < db_create.sql
+COPY ./conf/db_create.sql /var/mariadb/
+COPY ./conf/setup.sh /var/mariadb/
+RUN chmod 777 /var/mariadb/db_create.sql
+RUN chmod 777 /var/mariadb/setup.sh
 
-CMD ["mysqld"]
+ENTRYPOINT ["/var/mariadb/setup.sh"]
+
+CMD ["/usr/bin/mysqld", "--user=mysql", "--init-file=/var/mariadb/db_create.sql"]
 
