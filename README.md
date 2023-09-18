@@ -1,6 +1,7 @@
 # ft_inception
 This project aims to broaden the knowledge of system administration by using Docker and docker-compose.
-We virtualize several Docker images, to create a working wordpress Website.
+We virtualize several custom Docker images based on alpine, to create a working wordpress Website.
+
 
 ## I used 3 Different Containers
 ### Nginx
