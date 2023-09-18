@@ -28,7 +28,7 @@ volume:
 	sudo rm -rf ~/data/mariadb
 	
 domain:	
-	echo "127.0.0.1 fsemke.42.fr" >> /etc/hosts
+	echo "127.0.0.1 owndomain.home" >> /etc/hosts
 
 logs: 
 	docker compose -f $(YML) logs
